@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/paper_background"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/iv_article_image"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="8dp"
+            android:contentDescription="@string/article_image_desc" />
+
+        <TextView
+            android:id="@+id/tv_article_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_toRightOf="@id/iv_article_image"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_article_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_article_title"
+            android:layout_marginBottom="8dp"
+            android:layout_toRightOf="@id/iv_article_image" />
+
+
+        <TextView
+            android:id="@+id/tv_article_trail_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_article_section"
+            android:layout_toRightOf="@id/iv_article_image" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
