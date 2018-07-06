@@ -16,11 +16,14 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.github.andyradionov.guardiannews.R;
 import io.github.andyradionov.guardiannews.app.App;
+import io.github.andyradionov.guardiannews.app.AppPreferences;
 import io.github.andyradionov.guardiannews.model.dto.Article;
 import io.github.andyradionov.guardiannews.presenter.ArticlesPresenter;
 
@@ -30,7 +33,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
     private static final String TAG = ArticlesActivity.class.getSimpleName();
 
     private Unbinder unbinder;
-    private ArticlesPresenter mArticlesPresenter;
+    @Inject ArticlesPresenter mArticlesPresenter;
     private ArticlesAdapter mArticlesAdapter;
 
     @BindView(R.id.recycler_news)
@@ -53,11 +56,11 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
 
         unbinder = ButterKnife.bind(this);
 
-        mArticlesPresenter = new ArticlesPresenter(this);
+        App.getApp(this).getAppComponent().inject(this);
 
         setUpRecycler();
         setKeyListener();
-        loadArticles(App.ALL_NEWS_QUERY);
+        loadArticles(AppPreferences.ALL_NEWS_QUERY);
     }
 
     @Override
@@ -127,7 +130,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
 
         if (App.isInternetAvailable(this)) {
             setDataVisibility(View.GONE, View.VISIBLE, View.GONE);
-            mArticlesPresenter.findNewsArticles(searchQuery);
+            mArticlesPresenter.findNewsArticles(searchQuery, this);
         } else {
             Toast.makeText(this, R.string.no_internet_connection_msg, Toast.LENGTH_LONG)
                     .show();

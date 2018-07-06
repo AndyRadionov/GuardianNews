@@ -1,6 +1,7 @@
 package io.github.andyradionov.guardiannews.model.network;
 
 import io.github.andyradionov.guardiannews.app.App;
+import io.github.andyradionov.guardiannews.app.AppPreferences;
 import io.github.andyradionov.guardiannews.model.dto.GetArticlesResponseDto;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -14,6 +15,6 @@ import retrofit2.http.Query;
 
 public interface NewsApi {
 
-    @GET(App.SEARCH_NEWS_QUERY)
+    @GET(AppPreferences.SEARCH_NEWS_QUERY)
     Observable<GetArticlesResponseDto> searchNews(@Query("q") String searchQuery);
 }

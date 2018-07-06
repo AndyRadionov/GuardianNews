@@ -24,9 +24,9 @@ public class NewsData {
 
     private NewsApi newsApi;
 
-    public NewsData() {
+    public NewsData(NewsApi newsApi) {
         Log.d(TAG, "NewsData constructor call");
-        newsApi = App.getNewsApi();
+        this.newsApi = newsApi;
     }
 
     public Observable<List<Article>> getArticles(String searchQuery) {

@@ -3,6 +3,7 @@ package io.github.andyradionov.guardiannews.presenter;
 import android.util.Log;
 
 import io.github.andyradionov.guardiannews.app.App;
+import io.github.andyradionov.guardiannews.model.network.NewsApi;
 import io.github.andyradionov.guardiannews.model.network.NewsData;
 import io.github.andyradionov.guardiannews.ui.ArticlesView;
 
@@ -17,16 +18,14 @@ public class ArticlesPresenter {
     private static final String TAG = ArticlesPresenter.class.getSimpleName();
 
     private NewsData newsData;
-    private ArticlesView articlesView;
 
-    public ArticlesPresenter(ArticlesView articlesView) {
+    public ArticlesPresenter(NewsData newsData) {
         Log.d(TAG, "ArticlesPresenter constructor call");
 
-        this.newsData = App.getNewsData();
-        this.articlesView = articlesView;
+        this.newsData = newsData;
     }
 
-    public void findNewsArticles(String searchQuery) {
+    public void findNewsArticles(String searchQuery, ArticlesView articlesView) {
         Log.d(TAG, "findNewsArticles");
 
         newsData.getArticles(searchQuery)
