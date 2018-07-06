@@ -1,4 +1,4 @@
-package io.github.andyradionov.guardiannews.di;
+package io.github.andyradionov.guardiannews.app.di;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -6,20 +6,15 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.github.andyradionov.guardiannews.app.App;
 import io.github.andyradionov.guardiannews.app.AppPreferences;
 import io.github.andyradionov.guardiannews.model.network.NewsApi;
 import io.github.andyradionov.guardiannews.model.network.NewsData;
 import io.github.andyradionov.guardiannews.presenter.ArticlesPresenter;
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -35,7 +30,7 @@ public class AppModule {
     @Provides
     @NonNull
     @Singleton
-    public NewsData provideNewsDate() {
+    public NewsData provideNewsData() {
         return new NewsData(createApi());
     }
 

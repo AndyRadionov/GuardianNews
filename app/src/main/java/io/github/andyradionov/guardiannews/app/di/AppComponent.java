@@ -1,6 +1,4 @@
-package io.github.andyradionov.guardiannews.di;
-
-import android.support.v7.app.AppCompatActivity;
+package io.github.andyradionov.guardiannews.app.di;
 
 import javax.inject.Singleton;
 

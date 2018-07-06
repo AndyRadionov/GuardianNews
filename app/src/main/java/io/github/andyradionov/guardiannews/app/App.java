@@ -6,17 +6,9 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import io.github.andyradionov.guardiannews.di.AppComponent;
-import io.github.andyradionov.guardiannews.di.AppModule;
-import io.github.andyradionov.guardiannews.di.DaggerAppComponent;
-import io.github.andyradionov.guardiannews.model.network.NewsApi;
-import io.github.andyradionov.guardiannews.model.network.NewsData;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import io.github.andyradionov.guardiannews.app.di.AppComponent;
+import io.github.andyradionov.guardiannews.app.di.AppModule;
+import io.github.andyradionov.guardiannews.app.di.DaggerAppComponent;
 
 /**
  * @author Andrey Radionov
