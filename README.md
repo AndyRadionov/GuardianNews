@@ -2,7 +2,7 @@
 Android App shows News From Guardian
 
 ### Installation
- - Put Your Api key here: guardiannews/app/App.java
+ - Put Your Api key here: gradle.properties
  
 ### Used Libraries
  - Retrofit
