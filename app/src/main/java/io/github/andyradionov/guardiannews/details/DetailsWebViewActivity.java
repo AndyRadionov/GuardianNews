@@ -1,4 +1,4 @@
-package io.github.andyradionov.guardiannews.ui;
+package io.github.andyradionov.guardiannews.details;
 
 
 import android.content.Intent;
@@ -12,9 +12,9 @@ import android.webkit.WebViewClient;
 
 import io.github.andyradionov.guardiannews.R;
 
-public class WebViewActivity extends AppCompatActivity {
+public class DetailsWebViewActivity extends AppCompatActivity {
 
-    private static final String TAG = WebViewActivity.class.getSimpleName();
+    private static final String TAG = DetailsWebViewActivity.class.getSimpleName();
 
     public static final String ARTICLE_URL_EXTRA = "article_url_extra";
 

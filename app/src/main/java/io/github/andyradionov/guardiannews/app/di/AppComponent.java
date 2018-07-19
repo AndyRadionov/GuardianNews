@@ -3,7 +3,8 @@ package io.github.andyradionov.guardiannews.app.di;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import io.github.andyradionov.guardiannews.ui.ArticlesActivity;
+import io.github.andyradionov.guardiannews.data.network.NewsData;
+import io.github.andyradionov.guardiannews.articles.ArticlesActivity;
 
 /**
  * @author Andrey Radionov

@@ -1,4 +1,4 @@
-package io.github.andyradionov.guardiannews.ui;
+package io.github.andyradionov.guardiannews.articles;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,10 +24,10 @@ import butterknife.Unbinder;
 import io.github.andyradionov.guardiannews.R;
 import io.github.andyradionov.guardiannews.app.App;
 import io.github.andyradionov.guardiannews.app.AppPreferences;
-import io.github.andyradionov.guardiannews.model.dto.Article;
-import io.github.andyradionov.guardiannews.presenter.ArticlesPresenter;
+import io.github.andyradionov.guardiannews.data.dto.Article;
+import io.github.andyradionov.guardiannews.details.DetailsWebViewActivity;
 
-public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
+public class ArticlesActivity extends AppCompatActivity implements ArticlesContract.View,
         ArticlesAdapter.OnItemClickListener {
 
     private static final String TAG = ArticlesActivity.class.getSimpleName();
@@ -54,10 +54,10 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_articles);
 
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
 
         App.getApp(this).getAppComponent().inject(this);
-
+        mArticlesPresenter.attachView(this);
         setUpRecycler();
         setKeyListener();
         loadArticles(AppPreferences.ALL_NEWS_QUERY);
@@ -67,7 +67,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
     protected void onDestroy() {
         Log.d(TAG, "onDestroy");
         super.onDestroy();
-        unbinder.unbind();
+        mArticlesPresenter.detachView(this);
     }
 
     @Override
@@ -90,8 +90,8 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
     public void onItemClick(String articleUrl) {
         Log.d(TAG, "onItemClick");
 
-        Intent openWebPageIntent = new Intent(this, WebViewActivity.class);
-        openWebPageIntent.putExtra(WebViewActivity.ARTICLE_URL_EXTRA, articleUrl);
+        Intent openWebPageIntent = new Intent(this, DetailsWebViewActivity.class);
+        openWebPageIntent.putExtra(DetailsWebViewActivity.ARTICLE_URL_EXTRA, articleUrl);
         startActivity(openWebPageIntent);
     }
 
@@ -115,7 +115,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
 
     private void setKeyListener() {
         mSearchBox.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH){
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 hideKeyboard();
                 String searchQuery = mSearchBox.getText().toString();
                 loadArticles(searchQuery);
@@ -130,7 +130,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
 
         if (App.isInternetAvailable(this)) {
             setDataVisibility(View.GONE, View.VISIBLE, View.GONE);
-            mArticlesPresenter.findNewsArticles(searchQuery, this);
+            mArticlesPresenter.findNewsArticles(searchQuery);
         } else {
             Toast.makeText(this, R.string.no_internet_connection_msg, Toast.LENGTH_LONG)
                     .show();
@@ -146,7 +146,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticlesView,
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             if (imm != null) {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }

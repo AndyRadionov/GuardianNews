@@ -1,15 +1,13 @@
-package io.github.andyradionov.guardiannews.model.network;
+package io.github.andyradionov.guardiannews.data.network;
 
 import android.util.Log;
 
 import java.util.List;
 
-import io.github.andyradionov.guardiannews.app.App;
-import io.github.andyradionov.guardiannews.model.dto.Article;
-import io.github.andyradionov.guardiannews.model.dto.GetArticlesResponseDto;
+import io.github.andyradionov.guardiannews.data.dto.Article;
+import io.github.andyradionov.guardiannews.data.dto.GetArticlesResponseDto;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**

@@ -1,4 +1,4 @@
-package io.github.andyradionov.guardiannews.model.dto;
+package io.github.andyradionov.guardiannews.data.dto;
 
 import java.util.Date;
 

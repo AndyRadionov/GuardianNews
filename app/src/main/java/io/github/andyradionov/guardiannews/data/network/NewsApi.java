@@ -1,8 +1,7 @@
-package io.github.andyradionov.guardiannews.model.network;
+package io.github.andyradionov.guardiannews.data.network;
 
-import io.github.andyradionov.guardiannews.app.App;
 import io.github.andyradionov.guardiannews.app.AppPreferences;
-import io.github.andyradionov.guardiannews.model.dto.GetArticlesResponseDto;
+import io.github.andyradionov.guardiannews.data.dto.GetArticlesResponseDto;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

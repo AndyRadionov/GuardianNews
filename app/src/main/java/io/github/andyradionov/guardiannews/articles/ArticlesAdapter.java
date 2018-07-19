@@ -1,4 +1,4 @@
-package io.github.andyradionov.guardiannews.ui;
+package io.github.andyradionov.guardiannews.articles;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 import io.github.andyradionov.guardiannews.R;
-import io.github.andyradionov.guardiannews.model.dto.Article;
+import io.github.andyradionov.guardiannews.data.dto.Article;
 
 /**
  * RecyclerView Adapter
