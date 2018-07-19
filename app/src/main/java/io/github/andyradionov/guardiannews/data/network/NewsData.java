@@ -2,12 +2,9 @@ package io.github.andyradionov.guardiannews.data.network;
 
 import android.util.Log;
 
-import java.util.List;
-
-import io.github.andyradionov.guardiannews.data.dto.Article;
 import io.github.andyradionov.guardiannews.data.dto.GetArticlesResponseDto;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -20,18 +17,38 @@ public class NewsData {
 
     private static final String TAG = NewsData.class.getSimpleName();
 
-    private NewsApi newsApi;
+    private NewsApi mNewsApi;
+    private Disposable mSubscription;
 
     public NewsData(NewsApi newsApi) {
         Log.d(TAG, "NewsData constructor call");
-        this.newsApi = newsApi;
+        this.mNewsApi = newsApi;
     }
 
-    public Observable<List<Article>> getArticles(String searchQuery) {
+    public void fetchArticles(String searchQuery, NewsCallback newsCallback) {
         Log.d(TAG, "getArticles");
-        return newsApi.searchNews(searchQuery)
+        unsubscribe();
+
+        mSubscription = mNewsApi.searchNews(searchQuery)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(GetArticlesResponseDto::getResults);
+                .map(GetArticlesResponseDto::getResults)
+                .doOnError(throwable -> {
+                    newsCallback.onErrorLoading();
+                })
+                .subscribe(articles -> {
+                    if (articles.isEmpty()) {
+                        newsCallback.onErrorLoading();
+                    } else {
+                        newsCallback.onSuccessLoading(articles);
+                    }
+                }, throwable -> newsCallback.onErrorLoading());
+    }
+
+    public void unsubscribe() {
+        if (mSubscription != null && !mSubscription.isDisposed()) {
+            mSubscription.dispose();
+            mSubscription = null;
+        }
     }
 }

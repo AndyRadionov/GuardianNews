@@ -2,6 +2,10 @@ package io.github.andyradionov.guardiannews.articles;
 
 import android.util.Log;
 
+import java.util.List;
+
+import io.github.andyradionov.guardiannews.data.dto.Article;
+import io.github.andyradionov.guardiannews.data.network.NewsCallback;
 import io.github.andyradionov.guardiannews.data.network.NewsData;
 import io.reactivex.disposables.Disposable;
 
@@ -11,13 +15,12 @@ import io.reactivex.disposables.Disposable;
  * @author Andrey Radionov
  */
 
-public class ArticlesPresenter implements ArticlesContract.Presenter {
+public class ArticlesPresenter implements ArticlesContract.Presenter, NewsCallback {
 
     private static final String TAG = ArticlesPresenter.class.getSimpleName();
 
     private NewsData newsData;
     private ArticlesContract.View mArticlesView;
-    private Disposable mSubscription;
 
     public ArticlesPresenter(NewsData newsData) {
         Log.d(TAG, "ArticlesPresenter constructor call");
@@ -29,18 +32,17 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
     @Override
     public void findNewsArticles(String searchQuery) {
         Log.d(TAG, "findNewsArticles");
-        checkSubscription();
-        mSubscription = newsData.getArticles(searchQuery)
-                .doOnError(throwable -> {
-                    mArticlesView.viewError();
-                })
-                .subscribe(articles -> {
-                    if (articles.isEmpty()) {
-                        mArticlesView.viewError();
-                    } else {
-                        mArticlesView.viewArticles(articles);
-                    }
-                }, throwable -> mArticlesView.viewError());
+        newsData.fetchArticles(searchQuery, this);
+    }
+
+    @Override
+    public void onSuccessLoading(List<Article> articles) {
+        mArticlesView.viewArticles(articles);
+    }
+
+    @Override
+    public void onErrorLoading() {
+        mArticlesView.viewError();
     }
 
     @Override
@@ -50,14 +52,7 @@ public class ArticlesPresenter implements ArticlesContract.Presenter {
 
     @Override
     public void detachView(ArticlesContract.View view) {
-        checkSubscription();
+        newsData.unsubscribe();
         mArticlesView = null;
-    }
-
-    private void checkSubscription() {
-        if(mSubscription != null && !mSubscription.isDisposed()){
-            mSubscription.dispose();
-            mSubscription = null;
-        }
     }
 }
