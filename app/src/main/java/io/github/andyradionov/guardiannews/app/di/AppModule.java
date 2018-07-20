@@ -13,7 +13,6 @@ import dagger.Provides;
 import io.github.andyradionov.guardiannews.app.AppPreferences;
 import io.github.andyradionov.guardiannews.data.network.NewsApi;
 import io.github.andyradionov.guardiannews.data.network.NewsData;
-import io.github.andyradionov.guardiannews.articles.ArticlesPresenter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,15 +29,8 @@ public class AppModule {
     @Provides
     @NonNull
     @Singleton
-    public static NewsData provideNewsData() {
+    public NewsData provideNewsData() {
         return new NewsData(createApi());
-    }
-
-    @Provides
-    @NonNull
-    @Singleton
-    public static ArticlesPresenter provideArticlesPresenter(NewsData newsData) {;
-        return new ArticlesPresenter(newsData);
     }
 
     private static NewsApi createApi() {

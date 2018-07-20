@@ -20,7 +20,15 @@ public class GetArticlesResponseDto {
         this.response = response;
     }
 
-    private class Response {
-        List<Article> results;
+    public static class Response {
+        private List<Article> results;
+
+        public List<Article> getResults() {
+            return results;
+        }
+
+        public void setResults(List<Article> results) {
+            this.results = results;
+        }
     }
 }

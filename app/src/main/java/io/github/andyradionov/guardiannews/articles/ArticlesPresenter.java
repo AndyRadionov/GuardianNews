@@ -4,10 +4,11 @@ import android.util.Log;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.github.andyradionov.guardiannews.data.dto.Article;
 import io.github.andyradionov.guardiannews.data.network.NewsCallback;
 import io.github.andyradionov.guardiannews.data.network.NewsData;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Articles Presenter
@@ -22,12 +23,12 @@ public class ArticlesPresenter implements ArticlesContract.Presenter, NewsCallba
     private NewsData newsData;
     private ArticlesContract.View mArticlesView;
 
+    @Inject
     public ArticlesPresenter(NewsData newsData) {
         Log.d(TAG, "ArticlesPresenter constructor call");
 
         this.newsData = newsData;
     }
-
 
     @Override
     public void findNewsArticles(String searchQuery) {
